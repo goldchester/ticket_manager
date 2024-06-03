@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Edit an ticket</title>
+    </head>
+<body>
+    {% if step == "display_entries" %}
+        {% if tickets|length > 0 %}
+            <h1>Edit an ticket</h1>
+            <form method="post">
+            <table border="1">
+            <tr><td></td><td>Date</td><td>Title</td></tr>
+            {% for ticket in tickets %}
+                <tr><td><input type="radio" name="postid" value="{{ ticket.id }}"></td>
+                <td>{{ ticket.created_at }}</td><td>{{ ticket.title }}</td></tr>
+            {% endfor %}
+            </table>
+            <input type="hidden" name="substep" value="edit_ticket_solution">
+            <input type="hidden" name="step" value="edit_ticket">
+            <p><a href="{{ url_for('index') }}">Go to the home page</a>
+            <p>
+            <input type="submit">
+            </form>
+        {% else %}
+            {% if action == "edit_ticket" %}
+                You don't have tickets that are created by you
+                <p><a href="{{ url_for('index') }}">Go to the home page</a>
+            {% elif action == "edit_solution" %}
+                You don't have tickets that are assigned to you
+                <p><a href="{{ url_for('index') }}">Go to the home page</a>
+            {% endif %}
+        {% endif %}
+    {% elif step == "edit_ticket"%}
+        <h1>Edit data in ticket</h1>
+        <form method="post">
+        Enter the short title :
+        <input type="text" size="30" maxlength="100" name="title" value="{{ ticket.title }}">
+        <p>
+        Enter the problem : 
+        <textarea id="problem" name="problem" rows="10" cols="50" maxlength="1000">{{ ticket.problem }}</textarea>
+        <p>
+        Select priority : 
+        <select name="priority" id="priority">
+            {% for p in priority %}
+                <option value="{{ p[0] }}" {% if p[0] == ticket.priority_id %}selected{% endif %}>{{ p[1] }}</option>
+            {% endfor %}
+        </select>
+        <p>
+        Assigned to : 
+        <select name="department" id="department">
+            {% for d in departments %}
+                <option value="{{ d[0] }}" {% if d[0] == assigned_to_dep %}selected{% endif %}>{{ d[1] }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="step" value="update_database">
+        <input type="hidden" name="postid" value="{{ ticket.id }}">
+        <p><a href="{{ url_for('index') }}">Go to the home page</a><p>
+        <input type="submit">
+        </form>
+    {% elif substep == "edit_ticket_solution"%}
+        <form method="post">
+        Title : {{ ticket.title }}<p>
+        Problem : 
+        <textarea readonly id="problem" name="problem" rows="10" cols="50" maxlength="1000">{{ ticket.problem }}</textarea>
+        <p>
+        Add solutions 
+        <p>
+        Use "; " devider after every solution
+        <p>
+        <textarea id="solutions" name="solutions" rows="10" cols="50" maxlength="1000">{{ ticket.solutions }}</textarea>
+        <p>
+        <input type="hidden" name="step" value="update_database">
+        <input type="hidden" name="substep" value="">
+        <input type="hidden" name="postid" value="{{ ticket.id }}">
+        <p><a href="{{ url_for('index') }}">Go to the home page</a><p>
+        <input type="submit">
+        </form>
+    {% elif step == "success"%}
+    Your ticket has been successfully edited! 
+    <p><a href="{{ url_for('index') }}">Go to the home page</a>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>Login page</title>
+</head>
+<body>
+    {% if step == "compose_entry" %}
+        <h1>Select your department and name</h1>
+        <form method="post">
+            Enter your department:
+            <select name="department" id="department" onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                {% for dept in departments %}
+                    <option value="{{ dept }}" {% if selected_department == dept %}selected{% endif %}>{{ dept }}</option>
+                {% endfor %}
+            </select><p>
+        {% if action == "get_dep" %}
+            <input type="hidden" name="action" value="get_dep">
+        {% elif action == "get_name" %}
+            Enter your name:
+            <select name="name" id="name"  onchange="this.form.submit()">
+                <option value="">--Select--</option>
+                {% for name in names %}
+                    <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="action" value="get_name">
+        {% endif %}
+        <input type="hidden" name="step" value="success">
+        </form>
+    {% endif %}
+</body>
+</html>

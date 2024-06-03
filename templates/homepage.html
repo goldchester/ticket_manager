@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Ticket Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        li a {
+            text-decoration: none;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        li a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ticket Management System Homepage</h1>
+        <p>You are logged in as <strong>{{ name }}</strong> from <strong>{{ department }}</strong> department.</p>
+        <ul>
+            <li><a href="{{ url_for('browse') }}">Browse Tickets</a></li>
+            <li><a href="{{ url_for('create') }}">Create a New Ticket</a></li>
+            <li><a href="{{ url_for('assign') }}">Assign Tickets to Me</a></li>
+            <li><a href="{{ url_for('edit') }}">Edit a Ticket</a></li>
+            <li><a href="{{ url_for('editsolution') }}">Edit a Ticket's Solution</a></li>
+            <li><a href="{{ url_for('delete') }}">Delete a Ticket</a></li>
+            <li><a href="{{ url_for('solve') }}">Mark Ticket as Solved</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </div>
+</body>
+</html>

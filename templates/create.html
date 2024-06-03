@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>Create ticket</title>
+</head>
+<body>
+    {% if step == "compose_entry" %}
+    <h1>Enter data in ticket</h1>
+    <form method="post">
+        Enter the short title :
+        <input type="text" size="30" maxlength="100" name="title">
+        <p>
+        Enter the problem : 
+        <textarea id="problem" name="problem" rows="10" cols="50" maxlength="1000"></textarea>
+        <p>
+        Select priority : 
+        <select name="priority" id="priority">
+            {% for p in priority %}
+                <option value="{{ p[0] }}" {% if p[1] == 'Default'%}selected{% endif %}>{{ p[1] }}</option>
+            {% endfor %}
+        </select>
+        <p>
+        Assigned to : 
+        <select name="department" id="department">
+            {% for d in departments %}
+                <option value="{{ d[0] }}" >{{ d[1] }}</option>
+            {% endfor %}
+        </select>
+        <p>
+        <p><a href="{{ url_for('index') }}">Go to the home page</a><p>
+        <input type="submit">
+        <input type="hidden" name="step" value="add_entry">
+    </form>
+    {% elif step == "empty" %}
+        Some field are empty.
+        <p><a href="{{ url_for('create') }}">Go back to the create page</a>
+    {% elif step == "add_entry" %}
+        Your ticket has been successfully created! 
+        <p><a href="{{ url_for('index') }}">Go to the home page</a>
+    {% endif %}
+</body>
+</html>

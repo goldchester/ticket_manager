@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Browse tickets</title>
+    </head>
+<body>
+    <h1>Browse tickets</h1>
+    <ul>
+        <li><a href="{{ url_for('browse_created') }}">Browse tickets created by you</a>
+        <li><a href="{{ url_for('browse_assigned') }}">Browse tickets assigned to you</a>
+        <li><a href="{{ url_for('browse_department') }}">Browse new tickets assigned to your department</a>
+        <li><a href="{{ url_for('browse_solved') }}">Browse tickets that are solved by you</a>
+        <li><a href="{{ url_for('index') }}">Go to the home page</a>
+    </ul>
+</body>
+</html>

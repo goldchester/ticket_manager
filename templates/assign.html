@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Assign an ticket to you</title>
+    </head>
+<body>
+    {% if step == "display_entries" %}
+        {% if tickets|length > 0 %}
+            <h1>Assign an ticket to you</h1>
+            <form method="post">
+            <table border="1">
+            <tr><td></td><td>Date</td><td>Title</td></tr>
+            {% for ticket in tickets %}
+                <tr><td><input type="checkbox" name="postid" value="{{ticket.id}}"></td>
+                <td>{{ ticket.created_at }}</td><td>{{ ticket.title }}</td></tr>
+            {% endfor %}
+            </table>
+            <input type="hidden" name="step" value="assign_tickets">
+            {% if action == "delete_tickets"%}
+                <input type="hidden" name="substep" value="delete_tickets">
+            {% elif action == "solve_tickets"%}
+                <input type="hidden" name="substep" value="solve_tickets">
+            {% endif %}
+            <p><a href="{{ url_for('index') }}">Go to the home page</a><p>
+            <input type="submit">
+            </form>
+        {%else %}
+            {% if action == "assign_tickets"%}
+                There's no tickets to assign.
+                <p><a href="{{ url_for('index') }}">Go to the home page</a>
+            {% elif action == "delete_tickets"%}
+                There's no tickets to delete.
+                <p><a href="{{ url_for('index') }}">Go to the home page</a>
+            {% elif action == "solve_tickets"%}
+                There's no tickets to solve. Maybe, because there's no tickets that are assigned to you.
+                <p><a href="{{ url_for('index') }}">Go to the home page</a>
+            {% endif %}
+        {% endif %}
+
+    {% elif step == "success" and substep == "delete_tickets"%}
+        Selected tickets were deleted.
+        <p><a href="{{ url_for('index') }}">Go to the home page</a>
+    {% elif step == "success" and substep == "solve_tickets"%}
+        Selected tickets were marked as solved.
+        <p><a href="{{ url_for('index') }}">Go to the home page</a>
+    {% elif step == "success"%}
+        Changes were implemented. You are assigned to solve this ticket.
+        <p><a href="{{ url_for('index') }}">Go to the home page</a>
+    {% endif %}
+</body>
+</html>

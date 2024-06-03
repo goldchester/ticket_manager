@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Browse tickets</title>
+    </head>
+<body>
+    <h1>Browse tickets</h1>
+    <a href="{{ url_for('browse') }}">Go to the browse page</a>
+    {% for ticket in tickets %}
+        {% if ticket.status == "New" %}
+            <ul>
+                <li>Ticket №{{ ticket.ticket_id }}</li>
+                <li>Created by {{ ticket.created_by_name }} {{ ticket.created_by_surname }} from {{ ticket.created_by_department }} at {{ ticket.created_at }}</li>
+                <li>Problem: {{ ticket.problem }}</li>
+                <li>Priority: {{ ticket.priority }}</li>
+                <li>Status: {{ ticket.status }}</li>
+                <hr>
+            </ul>
+        {% else %}
+            {% if ticket.status == "Being solved" %}
+                <ul>
+                    <li>Ticket №{{ ticket.ticket_id }}</li>
+                    <li>Created by {{ ticket.created_by_name }} {{ ticket.created_by_surname }} from {{ ticket.created_by_department }} at {{ ticket.created_at }}</li>
+                    <li>Being solved by: {{ ticket.assigned_to_name }} {{ ticket.assigned_to_surname }} from {{ ticket.assigned_to_department }}</li>
+                    <li>Problem: {{ ticket.problem }}</li>
+                    {% if ticket.solutions %}
+                        <li>Taken solutions:
+                        <ul>
+                            {% for action in ticket.solutions.split("; ") %}
+                                <li>{{ action }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <li>Priority: {{ ticket.priority }}</li>
+                    <li>Status: {{ ticket.status }}</li>
+                    <hr>
+                </ul>
+            {% else %}
+                {% if ticket.status == "Solved" %}
+                    <ul>
+                        <li>Ticket №{{ ticket.ticket_id }}</li>
+                        <li>Created by {{ ticket.created_by_name }} {{ ticket.created_by_surname }} from {{ ticket.created_by_department }} at {{ ticket.created_at }}</li>
+                        <li>Solved by: {{ ticket.assigned_to_name }} {{ ticket.assigned_to_surname }} from {{ ticket.assigned_to_department }} at {{ ticket.solved_at }}</li>
+                        <li>Problem: {{ ticket.problem }}</li>
+                        {% if ticket.solutions %}
+                            <li>Taken solutions:
+                            <ul>
+                                {% for action in ticket.solutions.split("; ") %}
+                                    <li>{{ action }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <li>Priority: {{ ticket.priority }}</li>
+                        <li>Status: {{ ticket.status }}</li>
+                        <hr>
+                    </ul>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
